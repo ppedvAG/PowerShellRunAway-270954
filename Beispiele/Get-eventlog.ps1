@@ -26,12 +26,17 @@ https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/ab
 [cmdletBinding()]
 param(
 [Parameter(Mandatory=$true)]
+[ValidateSet(4624,4625,4634)]
 [int]$EventId,
 
-[int]$Newest = 5,
+[ValidateRange(5,10)]
+[int]$Newest = 3,
 
+[ValidateScript({Test-NetConnection -Computername $PSItem -CommonTCPPort WinRm -InformationLevel Quiet})]
 [string]$Computername = "localhost"
 )
+
+
 Write-Verbose -Message "Ausgabe Optional"
 Get-WinEvent -LogName Security -ComputerName $Computername | Where-Object Id -eq $EventId | Select-Object -First $Newest
 
