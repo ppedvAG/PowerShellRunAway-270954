@@ -23,3 +23,4 @@ KursRepository zu Kurs PowerShell - Fortgeschrittene Techniken der ppedv AG
     - Module
         - Simple Skriptmodule mit .psm1
         - Skriptmodule mit erweiterten Infors .psd1
+    - PipeLine Input
