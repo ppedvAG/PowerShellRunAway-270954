@@ -55,8 +55,11 @@ if(Test-Path -Path $TestFilesDirPath -PathType Container)
     }
     else
     {
+        Write-Error -Message "Ordner bereits vorhanden" -TargetObject (Get-Item -Path $TestFilesDirPath) -ErrorAction Stop
+    <#
         Write-Host -Object "Ordner vorhanden"
         exit
+        #>
     }
 }
 
