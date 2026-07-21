@@ -90,3 +90,53 @@ End
 }
 
 }
+
+<#
+.SYNOPSIS
+ Weiteres Beispiel für Begin Process End
+.DESCRIPTION
+ Mögliche Lösung zur BPE Übung, bzw zu weiteren Demonstration
+#>
+function Measure-Files
+{
+[cmdletBinding()]
+param(
+[Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+[long]$Length
+)
+Begin
+{
+[int]$count 
+[long]$SizeSum
+}
+Process
+{
+    $count ++
+    $SizeSum += $Length
+}
+End
+{
+$Einheit
+if($SizeSum -gt 1KB)
+{
+    $Einheit = "KB"
+    $SizeSum = $SizeSum / 1KB
+}
+elseif ($SizeSum -gt 1MB)
+{
+    $Einheit = "MB"
+    $SizeSum = $SizeSum / 1MB
+}
+elseif ($SizeSum -gt 1GB)
+{
+    $Einheit = "GB"
+    $SizeSum = $SizeSum / 1GB
+}
+elseif ($SizeSum -gt 1TB)
+{
+    $Einheit = "TB"
+    $SizeSum = $SizeSum / 1TB
+}
+"Anzahl: $count,Größe: $SizeSum $Einheit"
+}
+}
