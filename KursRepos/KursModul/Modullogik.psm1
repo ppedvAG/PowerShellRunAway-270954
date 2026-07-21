@@ -140,3 +140,36 @@ elseif ($SizeSum -gt 1TB)
 "Anzahl: $count,Größe: $SizeSum $Einheit"
 }
 }
+
+<#
+.SYNOPSIS
+Beispiel für ParameterSets
+.DESCRIPTION
+Verwendung verschiedenster Eingabemöglichkeiten 
+#>
+function Test-ParameterSet
+{
+[cmdletBinding(DefaultParameterSetName="Service")]
+param(
+
+[Parameter(Mandatory=$true, ParameterSetName="Prozess", ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+[string]$ProcessName,
+
+[Parameter(Mandatory=$true, ParameterSetName="Service", ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+[string]$ServiceName,
+
+[Parameter(Mandatory=$true, ParameterSetName="Service", ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+[string]$Status,
+
+[Parameter(Mandatory=$true, ParameterSetName="Prozess", ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+[int]$PM
+)
+Write-Verbose -Message "ParameterSet: $($PSCmdlet.ParameterSetName)"
+switch($PSCmdlet.ParameterSetName)
+{
+    "Prozess" {"$ProcessName  $($PM)"}
+    "Service" {"$ServiceName $Status" }
+}
+
+
+}
