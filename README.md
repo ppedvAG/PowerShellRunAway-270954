@@ -27,3 +27,4 @@ KursRepository zu Kurs PowerShell - Fortgeschrittene Techniken der ppedv AG
     - ParameterSets
     - Positions
     - Fehlerbehandlung
+- Class Enum
