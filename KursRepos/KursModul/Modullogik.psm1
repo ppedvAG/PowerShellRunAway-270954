@@ -173,3 +173,28 @@ switch($PSCmdlet.ParameterSetName)
 
 
 }
+
+<#
+.SYNOPSIS
+ Beispiel für Positional Binding
+.DESCRIPTION
+ Beispiel für das auscchalten des automatischen Positional Bindings und manuelles zuweisen von Positionen
+#>
+function Test-Positions
+{
+[cmdletBinding(PositionalBinding= $false)]
+param(
+[Parameter(Position=0)]
+$param1,
+
+$Param2,
+
+$param3
+)
+Write-Host -Object "Param1: " -NoNewline
+Write-Host -Object $param1 -ForegroundColor Magenta
+Write-Host -Object "Param2: " -NoNewline
+Write-Host -Object $param2 -ForegroundColor Magenta
+Write-Host -Object "Param3: " -NoNewline
+Write-Host -Object $param3 -ForegroundColor Magenta
+}
