@@ -21,9 +21,9 @@ param(
 
 <#
 .SYNOPSIS
-    Pipelinefähigkeit ByValue herstellen
+    Pipelinefï¿½higkeit ByValue herstellen
 .DESCRIPTION
-    Dieses Beispiel, welches jedes übergebene Zeichen in einer anderen Farbe ausgibt wird verwendet um Piplinefähigkeit ByValue zu demonstrieren
+    Dieses Beispiel, welches jedes ï¿½bergebene Zeichen in einer anderen Farbe ausgibt wird verwendet um Piplinefï¿½higkeit ByValue zu demonstrieren
 #>
 function Write-RainbowChar
 {
@@ -43,9 +43,9 @@ for($i = 0 ; $i -lt $InputObject.Length; $i ++)
 
 <#
 .SYNOPSIS
-    Pipelinefähigkeit ByPropertyName herstellen
+    Pipelinefï¿½higkeit ByPropertyName herstellen
 .DESCRIPTION
-    Dieses Beispiel, welches jedes übergebene Wort in einer anderen Farbe ausgibt wird verwendet um Piplinefähigkeit ByValue zu demonstrieren
+    Dieses Beispiel, welches jedes ï¿½bergebene Wort in einer anderen Farbe ausgibt wird verwendet um Piplinefï¿½higkeit ByValue zu demonstrieren
 #>
 function Write-RainbowWord
 {
@@ -61,7 +61,7 @@ Write-Host -Object $Name -ForegroundColor (Get-Random -Maximum 15)
 
 <#
 .SYNOPSIS
-    Für die vollständige Pipelinefähigkeit wird BPE benötigt
+    Fï¿½r die vollstï¿½ndige Pipelinefï¿½higkeit wird BPE benï¿½tigt
 .DESCRIPTION
     Begin Process End Konstruktion 
 #>
@@ -75,27 +75,27 @@ param(
 )
 Begin
 {
-    Write-Host -Object "Der Begin Block wird zum Start einmal ausgeführt" -ForegroundColor Magenta
+    Write-Host -Object "Der Begin Block wird zum Start einmal ausgefï¿½hrt" -ForegroundColor Magenta
     #Ideal zum Importieren von Modulen, Initialisieren / Deklarieren von Funktionen usw
 }
 Process
 {
-    #Message "Wird einmal für jedes übergebene Objekt ausgeführt"
+    #Message "Wird einmal fï¿½r jedes ï¿½bergebene Objekt ausgefï¿½hrt"
     Write-Host -Object $Name -ForegroundColor (Get-Random -Maximum 15)
 }
 End
 {
-    Write-Host -Object "Der End Block wird zum Ende einmal ausgeführt" -ForegroundColor Magenta
-    #Ideal zum schließen von RemoteVerbindungen oder zum gezielten Entladen von geschützen Modulen
+    Write-Host -Object "Der End Block wird zum Ende einmal ausgefï¿½hrt" -ForegroundColor Magenta
+    #Ideal zum schlieï¿½en von RemoteVerbindungen oder zum gezielten Entladen von geschï¿½tzen Modulen
 }
 
 }
 
 <#
 .SYNOPSIS
- Weiteres Beispiel für Begin Process End
+ Weiteres Beispiel fï¿½r Begin Process End
 .DESCRIPTION
- Mögliche Lösung zur BPE Übung, bzw zu weiteren Demonstration
+ Mï¿½gliche Lï¿½sung zur BPE ï¿½bung, bzw zu weiteren Demonstration
 #>
 function Measure-Files
 {
@@ -137,15 +137,15 @@ elseif ($SizeSum -gt 1TB)
     $Einheit = "TB"
     $SizeSum = $SizeSum / 1TB
 }
-"Anzahl: $count,Größe: $SizeSum $Einheit"
+"Anzahl: $count,Grï¿½ï¿½e: $SizeSum $Einheit"
 }
 }
 
 <#
 .SYNOPSIS
-Beispiel für ParameterSets
+Beispiel fï¿½r ParameterSets
 .DESCRIPTION
-Verwendung verschiedenster Eingabemöglichkeiten 
+Verwendung verschiedenster Eingabemï¿½glichkeiten 
 #>
 function Test-ParameterSet
 {
@@ -176,9 +176,9 @@ switch($PSCmdlet.ParameterSetName)
 
 <#
 .SYNOPSIS
- Beispiel für Positional Binding
+ Beispiel fï¿½r Positional Binding
 .DESCRIPTION
- Beispiel für das auscchalten des automatischen Positional Bindings und manuelles zuweisen von Positionen
+ Beispiel fï¿½r das auscchalten des automatischen Positional Bindings und manuelles zuweisen von Positionen
 #>
 function Test-Positions
 {
@@ -197,4 +197,37 @@ Write-Host -Object "Param2: " -NoNewline
 Write-Host -Object $param2 -ForegroundColor Magenta
 Write-Host -Object "Param3: " -NoNewline
 Write-Host -Object $param3 -ForegroundColor Magenta
+}
+
+<#
+.SYNOPSIS
+    Beispiel fï¿½r die Verwendung von .Net Elementen in Powershell
+.DESCRIPTION
+    Dieses Beispiel zeigt, wie .Net-Klassen in PowerShell verwendet werden kÃ¶nnen wie zb System.Speech
+#>
+function Out-Voice
+{
+[cmdletBinding()]
+param(
+    [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+    [string]$Text
+)
+Begin
+{
+    Add-Type -assemblyName System.Speech
+    $SpeechSynthesizer = New-Object System.Speech.Synthesis.SpeechSynthesizer
+    $audiosrv = Get-Service -Name "Audiosrv"
+    if($audiosrv.Status -ne "Running")
+    {
+        Start-Service -Name "Audiosrv"
+    }
+}
+Process
+{
+    $SpeechSynthesizer.Speak($Text)
+}
+End
+{
+    $SpeechSynthesizer.Dispose()
+}
 }
